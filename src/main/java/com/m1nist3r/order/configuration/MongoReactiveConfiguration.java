@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.config.AbstractReactiveMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
+import org.springframework.lang.NonNull;
 
 @EnableReactiveMongoRepositories
 public class MongoReactiveConfiguration extends AbstractReactiveMongoConfiguration {
@@ -20,6 +21,7 @@ public class MongoReactiveConfiguration extends AbstractReactiveMongoConfigurati
     }
 
     @Override
+    @NonNull
     protected String getDatabaseName() {
         return this.databaseName;
     }
