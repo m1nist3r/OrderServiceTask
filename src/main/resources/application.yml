@@ -4,6 +4,17 @@ server:
 database:
   name: orders
 
+jjwt:
+  secret: kWf5VT1459CJ3DFuzFSRFgIcoPd9JPxWbKNTSkXH707WrMJcIDPw8w3acLY3iGqs
+  expiration: 28800
+
 spring:
   application:
     name: OrderServiceTask
+  data:
+    mongodb:
+      username: ${MONGO_DB_USERNAME:orders}
+      password: ${MONGO_DB_PASSWORD:orders_password}
+      uri: ${MONGO_DB_URL:mongodb://localhost:27017/orderservice}
+      auto-index-creation: true
+
