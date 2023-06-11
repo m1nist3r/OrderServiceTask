@@ -15,7 +15,13 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("api/v1/orders")
-public record OrderController(OrderService orderService) {
+public class OrderController {
+
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")

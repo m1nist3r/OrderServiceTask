@@ -16,6 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -30,12 +31,13 @@ import java.util.stream.Stream;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+@AutoConfigureWebTestClient(timeout = "10000")
 @WebFluxTest(controllers = AuthController.class)
 @Import({JwtService.class, UserAuthenticationManager.class,
         SecurityContextRepository.class, SecurityConfiguration.class})
 public class AuthControllerTest {
 
-    private final String AUTH_URI = "http://localhost:8080/api/v1/auth";
+    private final String AUTH_URI = "/api/v1/auth";
 
     @Autowired
     private WebTestClient webTestClient;
