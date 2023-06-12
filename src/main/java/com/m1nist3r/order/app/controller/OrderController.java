@@ -38,12 +38,12 @@ public class OrderController {
                 .map(orderId -> ResponseEntity.status(HttpStatus.CREATED).body(orderId));
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/{email}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") })
-    public Flux<Order> getUserOrders(@PathVariable String username, Authentication authentication) {
+    public Flux<Order> getUserOrders(@PathVariable String email, Authentication authentication) {
         var roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
-        return orderService.getUserOrders(username, authentication.getName(), roles);
+        return orderService.getUserOrders(email, authentication.getName(), roles);
     }
 
     @GetMapping

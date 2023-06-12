@@ -7,11 +7,13 @@ import jakarta.validation.constraints.Size;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record RegistrationRequest(
+
+        @NotBlank
+        @Email
+        String email,
+
         @NotBlank
         @Size(min = 8, message = "Password must contain minimum 8 characters.")
         @Size(max = 32, message = "Password must contain maximum 32 characters.")
-        String password,
-        @NotBlank
-        @Email
-        String email) {
+        String password) {
 }
