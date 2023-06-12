@@ -8,6 +8,7 @@ import com.m1nist3r.order.security.model.AuthenticationResponse;
 import com.m1nist3r.order.security.model.RegistrationRequest;
 import com.m1nist3r.order.security.model.RegistrationResponse;
 import com.m1nist3r.order.security.repository.UserRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/auth")
+@Tag(name = "User APIs", description = "User API")
 public record AuthController(
         UserRepository userRepository,
         JwtService jwtService,
@@ -63,7 +65,7 @@ public record AuthController(
                                     Instant.now(),
                                     Instant.now(),
                                     false,
-                                    List.of(Permission.USER)
+                                    List.of(Permission.ROLE_USER)
                             ))
                         .doOnError(throwable -> LOGGER.error("User cannot be saved due to exception occur. {}",
                                 throwable.getLocalizedMessage()))

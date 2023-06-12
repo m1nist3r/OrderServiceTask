@@ -3,6 +3,9 @@ package com.m1nist3r.order.app.controller;
 import com.m1nist3r.order.app.entity.Order;
 import com.m1nist3r.order.app.model.CreateOrderRequest;
 import com.m1nist3r.order.app.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("api/v1/orders")
+@Tag(name = "Order API", description = "Order API")
 public class OrderController {
 
     private final OrderService orderService;
@@ -25,6 +29,7 @@ public class OrderController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     public Mono<ResponseEntity<String>> createOrder(
             @Valid @RequestBody CreateOrderRequest createOrderRequest,
             Authentication authentication
@@ -35,6 +40,7 @@ public class OrderController {
 
     @GetMapping("/{username}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     public Flux<Order> getUserOrders(@PathVariable String username, Authentication authentication) {
         var roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
         return orderService.getUserOrders(username, authentication.getName(), roles);
@@ -42,12 +48,14 @@ public class OrderController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     public Flux<Order> getOrders() {
         return orderService.getOrders();
     }
 
     @DeleteMapping("/{orderId}")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     public Mono<ResponseEntity<?>> removeOrder(@PathVariable String orderId) {
         return orderService.removeOrder(orderId).then(Mono.fromCallable(() -> ResponseEntity.ok().build()));
     }

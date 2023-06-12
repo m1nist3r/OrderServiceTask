@@ -18,3 +18,8 @@ spring:
       uri: ${MONGO_DB_URL:mongodb://localhost:27017/orderservice}
       auto-index-creation: true
 
+springdoc:
+  api-docs:
+    path: /v3/swagger-ui.html
+  swagger-ui:
+    path: /v3/api-docs

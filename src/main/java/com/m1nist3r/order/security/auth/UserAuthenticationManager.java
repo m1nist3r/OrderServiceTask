@@ -9,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
+import java.util.List;
 
 @Component
 public record UserAuthenticationManager(JwtService jwtService) implements ReactiveAuthenticationManager {
@@ -23,11 +23,11 @@ public record UserAuthenticationManager(JwtService jwtService) implements Reacti
                 .switchIfEmpty(Mono.empty())
                 .map(valid -> {
                     Claims claims = jwtService.getAllClaimsFromToken(authToken);
-                    String[] roles = claims.get("role", String[].class);
+                    List<String> roles = claims.get("role", List.class);
                     return new UsernamePasswordAuthenticationToken(
                             username,
                             null,
-                            Arrays.stream(roles).map(SimpleGrantedAuthority::new).toList()
+                            roles.stream().map(SimpleGrantedAuthority::new).toList()
                     );
                 });
     }

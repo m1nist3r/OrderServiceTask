@@ -34,7 +34,7 @@ public record OrderService(OrderRepository orderRepository) {
     }
 
     public Flux<Order> getUserOrders(String username, String authenticatedName, List<String> roles) {
-        if (!roles.contains(Permission.ADMIN.name())) {
+        if (!roles.contains(Permission.ROLE_ADMIN.name())) {
             if (!username.equals(authenticatedName)) {
                 return Flux.empty();
             }

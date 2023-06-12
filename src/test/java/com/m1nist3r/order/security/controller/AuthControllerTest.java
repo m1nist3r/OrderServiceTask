@@ -72,7 +72,7 @@ public class AuthControllerTest {
                         Instant.now(),
                         Instant.now(),
                         false,
-                        List.of(Permission.USER)
+                        List.of(Permission.ROLE_USER)
                 )));
 
         webTestClient.post()
@@ -108,7 +108,7 @@ public class AuthControllerTest {
                             Instant.now(),
                             Instant.now(),
                             false,
-                            List.of(Permission.USER)
+                            List.of(Permission.ROLE_USER)
                         )
                 ));
         webTestClient.post()
@@ -132,7 +132,7 @@ public class AuthControllerTest {
                             Instant.now(),
                             Instant.now(),
                             false,
-                            List.of(Permission.USER)
+                            List.of(Permission.ROLE_USER)
                         )
                 ));
         webTestClient.post()
